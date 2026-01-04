@@ -319,13 +319,38 @@ COLLECT_COLORS = [
 
 def get_back_to_game():
     bIsBackToGame = True
-    # cADVERT = get_pixel_color(584, 116)
-    # if (cADVERT == (255, 255, 255)):
-    #     pyautogui.click(1229, 604)
-    #     time.sleep(1)
-    #     pyautogui.click(981, 364)
-    #     time.sleep(5)
-    #     bIsBackToGame = False
+
+    nCount = 0
+    while True:
+        bBreakLoop = False
+        try:
+            # click on game
+            location = pyautogui.locateOnScreen("Images/RECONNECT.png",region=(740, 667, 1179, 823), confidence=0.9)
+
+            if location is not None:
+                print(f"Success! Found at {location}...")
+                nCount += 1
+                pyautogui.click(961, 748)
+                time.sleep(2)
+                bIsBackToGame = False
+            else:
+                print("Image not currently on screen.")
+                bBreakLoop = True
+            
+            if nCount >= 5:
+                pyautogui.click(132, 63) # need to refresh browser
+                time.sleep(10)
+                bBreakLoop = True
+        except pyautogui.ImageNotFoundException:
+            # print("Error: PyAutoGUI specifically couldn't find the image.")
+            bBreakLoop = True
+            pass
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+            bBreakLoop = True
+        if bBreakLoop:
+            break
+
 
     cPURPLE = get_pixel_color(959, 943)
     if (cPURPLE in COLORS):
@@ -370,17 +395,16 @@ def get_back_to_game():
             pyautogui.click(1650, 988)
             time.sleep(0.1)
 
-    pyautogui.click(974, 698)
-    pyautogui.click(714, 911)
 
-    # cCOLLECT = get_pixel_color(855, 465)
-    # if (cCOLLECT in COLLECT_COLORS):
-    #     time.sleep(0.1)
-    #     cCOLLECT2 = get_pixel_color(855, 465)
-    #     if (cCOLLECT2 in COLLECT_COLORS):
-    #         pyautogui.click(982, 488)
-    #         time.sleep(5)
-    #         bIsBackToGame = False
+    cCOLLECT = get_pixel_color(825, 467)
+    if (cCOLLECT in COLLECT_COLORS):
+        time.sleep(0.1)
+        cCOLLECT2 = get_pixel_color(825, 467)
+        if (cCOLLECT2 in COLLECT_COLORS):
+            print("Collecting reward...")
+            pyautogui.click(959, 469)
+            time.sleep(5)
+            bIsBackToGame = False
 
     try:
         # exit button
@@ -437,6 +461,14 @@ def get_back_to_game():
         print(f"An unexpected error occurred: {e}")
     
 
+    # reconnection buttons
+    delay = 0.5
+    L = 0.1
+    t = time_noise(delay, L)
+    pyautogui.click(974, 698)
+    time.sleep(t)
+    pyautogui.click(714, 911)
+    time.sleep(t)
 
     return bIsBackToGame
 
