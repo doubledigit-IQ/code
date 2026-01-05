@@ -473,6 +473,11 @@ def get_back_to_game():
     return bIsBackToGame
 
 def main():
+
+    t0 = time.time()
+    tf = time.time()
+    elapsed = tf - t0
+
     # click coords
     xc, yc = 958, 697
     R = 6
@@ -482,6 +487,22 @@ def main():
 
     print("starting...")
     while True:
+        bBreak = False
+        while elapsed > 8 * 3600: 
+            tf = time.time()
+            elapsed = tf - t0
+            daySeconds = 24 * 3600
+            elapsed = elapsed % daySeconds
+            time.sleep(1)
+            
+            if keyboard.is_pressed('esc'):
+                print("Stopping...")
+                bBreak = True
+                break
+        if bBreak:
+            break
+
+
 
         bExit = False
         while True:
