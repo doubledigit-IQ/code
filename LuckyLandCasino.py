@@ -493,7 +493,10 @@ def main():
             elapsed = tf - t0
             daySeconds = 24 * 3600
             elapsed = elapsed % daySeconds
-            time.sleep(1)
+            pyautogui.click(974, 698)
+            time.sleep(t)
+            pyautogui.click(714, 911)
+            time.sleep(t)
             
             if keyboard.is_pressed('esc'):
                 print("Stopping...")
