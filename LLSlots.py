@@ -64,6 +64,8 @@ def main():
         print("Clicking...")
         pyautogui.click(1664, 959)
         time.sleep(t)
+        pyautogui.click(1468, 251)
+        time.sleep(t)
         
 
         
